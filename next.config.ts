@@ -1,7 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /**
+   * Transpilasi paket Three.js dan React Three Fiber agar kompatibel
+   * dengan Next.js App Router (ESM → CJS transform).
+   */
+  transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
+
+  /**
+   * Konfigurasi Turbopack (default bundler Next.js 16+).
+   * Kosong = pakai default, menghilangkan warning "webpack config ignored".
+   */
+  turbopack: {},
 };
 
 export default nextConfig;
