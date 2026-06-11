@@ -43,7 +43,7 @@ export default function SceneSetup() {
 
       {/* ── Pencahayaan ──────────────────────────────────────── */}
       {/* Cahaya ambient: dasar agar tidak ada bagian gelap total */}
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.7} />
 
       {/* Cahaya utama dari atas-kiri */}
       <directionalLight
@@ -64,8 +64,9 @@ export default function SceneSetup() {
       <pointLight position={[3, 1, 4]} intensity={0.5} color="#f0abfc" />
 
       {/* ── Environment HDR ──────────────────────────────────── */}
-      {/* Memberikan refleksi realistis pada material metalik */}
-      <Environment preset="studio" />
+      {/* Catatan: Environment preset="studio" dinonaktifkan karena 
+          sering gagal dimuat (terblokir oleh ISP tertentu) yang 
+          menyebabkan error "Load failed" pada file .hdr */}
 
       {/* ── Bayangan kontak di bawah model ─────────────────── */}
       <ContactShadows
