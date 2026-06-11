@@ -45,7 +45,7 @@ export default function HomePage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-300 text-xs font-medium mb-8 tracking-wide">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            Media Pembelajaran Interaktif · Skripsi 2024
+            Media Pembelajaran Interaktif
           </div>
 
           {/* Judul skripsi */}
