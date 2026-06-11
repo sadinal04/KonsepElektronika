@@ -8,7 +8,7 @@
 
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
-import { OrbitControls, ContactShadows } from "@react-three/drei";
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 
 export default function SceneSetup() {
   const { camera, size } = useThree();
