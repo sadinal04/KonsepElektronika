@@ -23,14 +23,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo / Brand */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+            <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               KonsepElektronika
             </span>
           </Link>
 
           {/* Navigation Links - Scrollable on mobile */}
-          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 -mb-1 [&::-webkit-scrollbar]:hidden">
+          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 -mb-1 [&::-webkit-scrollbar]:hidden min-w-0 flex-1 justify-end ml-4">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (

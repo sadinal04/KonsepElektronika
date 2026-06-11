@@ -6,9 +6,29 @@
 
 "use client";
 
+import { useEffect } from "react";
+import { useThree } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 
 export default function SceneSetup() {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    const aspect = size.width / size.height;
+    if (aspect < 1) {
+      // Pada layar portrait (mobile), mundurkan kamera agar model tidak terpotong ke samping.
+      // Semakin sempit layar, semakin jauh jarak kamera (z).
+      // Menggunakan rasio 4 / (aspect * 1.1) dan membatasinya antara z=4 hingga z=6.5.
+      const targetZ = Math.min(6.5, Math.max(4, 4 / (aspect * 1.1)));
+      camera.position.set(0, 0, targetZ);
+    } else {
+      // Jarak default untuk desktop landscape
+      camera.position.set(0, 0, 4);
+    }
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+  }, [size.width, size.height, camera]);
+
   return (
     <>
       {/* ── Kontrol kamera: rotate, zoom, pan ──────────────── */}

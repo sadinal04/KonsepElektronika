@@ -98,83 +98,105 @@ export default function ComponentPage({ component }: ComponentPageProps) {
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
-
+ 
       {/* ── Header Halaman ──────────────────────────────────── */}
       <div className="flex-shrink-0 px-4 sm:px-6 py-3 border-b border-white/5 bg-gray-950/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto flex items-center gap-4">
-          {/* Tombol kembali */}
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 text-gray-400 hover:text-white text-sm transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-            Kembali
-          </Link>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+          {/* Baris Utama: Back, Nama Komponen, dan Debug Button */}
+          <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* Tombol kembali */}
+              <Link
+                href="/"
+                className="flex items-center gap-1.5 text-gray-400 hover:text-white text-xs sm:text-sm transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span>Kembali</span>
+              </Link>
 
-          <div className="w-px h-4 bg-white/10" />
+              <div className="w-px h-4 bg-white/10" />
 
-          {/* Info komponen */}
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <span className="text-xl">{component.icon}</span>
-            <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-white truncate">
-                {component.nameBahasa}
-              </h1>
-              <p className="text-xs text-gray-500 hidden sm:block truncate">
-                {component.description}
-              </p>
+              {/* Info komponen */}
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <span className="text-lg sm:text-xl">{component.icon}</span>
+                <div className="min-w-0">
+                  <h1 className="text-xs sm:text-sm font-semibold text-white truncate">
+                    {component.nameBahasa}
+                  </h1>
+                  <p className="text-xs text-gray-500 hidden md:block truncate">
+                    {component.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Tombol debug mode di mobile */}
+            <div className="sm:hidden">
+              <button
+                onClick={toggleDebugMode}
+                title={debugMode ? "Keluar mode picker" : "Mode Koordinat Picker"}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium border transition-all duration-200 ${
+                  debugMode
+                    ? "bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30"
+                    : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <span>🎯</span>
+                <span>{debugMode ? "Picker Aktif" : "Picker"}</span>
+              </button>
             </div>
           </div>
 
-          {/* Quick hotspot buttons */}
-          {!debugMode && (
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 overflow-x-auto pb-1 -mb-1 [&::-webkit-scrollbar]:hidden">
-              {component.annotations.map((ann) => (
-                <button
-                  key={ann.id}
-                  onClick={() => handleAnnotationClick(ann)}
-                  className={`flex-shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium border transition-all duration-150 ${
-                    activeAnnotation?.id === ann.id
-                      ? "bg-red-500/20 border-red-500/40 text-red-300"
-                      : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {ann.title}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Baris Kedua / Kanan: Hotspots & Debug button untuk desktop */}
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto min-w-0">
+            {/* Quick hotspot buttons */}
+            {!debugMode && (
+              <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 -mb-1 sm:mb-0 [&::-webkit-scrollbar]:hidden w-full sm:w-auto">
+                {component.annotations.map((ann) => (
+                  <button
+                    key={ann.id}
+                    onClick={() => handleAnnotationClick(ann)}
+                    className={`flex-shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium border transition-all duration-150 ${
+                      activeAnnotation?.id === ann.id
+                        ? "bg-red-500/20 border-red-500/40 text-red-300"
+                        : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {ann.title}
+                  </button>
+                ))}
+              </div>
+            )}
 
-          {/* Tombol debug mode */}
-          <button
-            onClick={toggleDebugMode}
-            title={debugMode ? "Keluar mode picker" : "Mode Koordinat Picker — klik model untuk cari posisi hotspot"}
-            className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 ${
-              debugMode
-                ? "bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30"
-                : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-            }`}
-          >
-            <span>🎯</span>
-            <span className="hidden sm:inline">
-              {debugMode ? "Mode Picker Aktif" : "Picker Koordinat"}
-            </span>
-          </button>
+            {/* Tombol debug mode di desktop */}
+            <button
+              onClick={toggleDebugMode}
+              title={debugMode ? "Keluar mode picker" : "Mode Koordinat Picker"}
+              className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 ${
+                debugMode
+                  ? "bg-amber-500/20 border-amber-500/40 text-amber-300 hover:bg-amber-500/30"
+                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+              }`}
+            >
+              <span>🎯</span>
+              <span>{debugMode ? "Mode Picker Aktif" : "Picker Koordinat"}</span>
+            </button>
+          </div>
         </div>
       </div>
-
+ 
       {/* ── Area Utama: Canvas 3D ────────────────────────────── */}
       <div className="flex-1 relative overflow-hidden">
         {/* Background gradient */}

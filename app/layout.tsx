@@ -50,10 +50,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={inter.variable}>
-      <body className="bg-gray-950 text-gray-100 antialiased font-sans">
+      <body className="bg-gray-950 text-gray-100 antialiased font-sans overflow-x-hidden w-full">
         <Navbar />
         {/* Konten halaman dimulai di bawah Navbar (h-16 = 4rem) */}
-        <main className="pt-16 min-h-screen">{children}</main>
+        <main className="pt-16 min-h-screen w-full overflow-x-hidden">{children}</main>
       </body>
     </html>
   );
