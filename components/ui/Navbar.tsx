@@ -29,15 +29,15 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Navigation Links */}
-          <div className="hidden sm:flex items-center gap-1">
+          {/* Navigation Links - Scrollable on mobile */}
+          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-1 -mb-1 [&::-webkit-scrollbar]:hidden">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                     isActive
                       ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
                       : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
@@ -47,11 +47,6 @@ export default function Navbar() {
                 </Link>
               );
             })}
-          </div>
-
-          {/* Mobile: hanya tampilkan nama halaman aktif */}
-          <div className="sm:hidden text-sm text-gray-400">
-            {navLinks.find((l) => l.href === pathname)?.label ?? "Menu"}
           </div>
         </div>
       </div>

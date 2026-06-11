@@ -17,48 +17,44 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
       {/* Overlay gelap di belakang panel (hanya mobile) */}
       {isVisible && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 sm:hidden backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-black/40 z-30 sm:hidden"
           onClick={onClose}
         />
       )}
 
-      {/* Panel: Bottom Sheet di mobile, Side Panel di desktop */}
+      {/* Panel slide-in (Bottom Sheet di HP, Side Panel di Desktop) */}
       <div
         className={`
-          fixed z-40 flex flex-col
-          bg-gray-900/95 backdrop-blur-xl shadow-2xl shadow-black/50 border-white/10
-          transition-transform duration-300 ease-out
+          fixed z-40 flex flex-col transition-transform duration-300 ease-out
+          bg-gray-900/95 backdrop-blur-xl shadow-2xl shadow-black/50
           
-          /* Mobile styling: bottom sheet */
-          bottom-0 left-0 right-0 w-full max-h-[80vh] rounded-t-3xl border-t
+          /* Mobile layout: Bottom Sheet */
+          bottom-0 left-0 right-0 top-auto h-auto max-h-[75vh]
+          rounded-t-3xl border-t border-white/10
           ${isVisible ? "translate-y-0" : "translate-y-full"}
           
-          /* Desktop styling: side panel */
-          sm:top-16 sm:bottom-0 sm:left-auto sm:right-0 sm:w-80 lg:w-96 sm:max-h-none sm:rounded-none sm:border-t-0 sm:border-l
-          ${
-            isVisible
-              ? "sm:translate-y-0 sm:translate-x-0"
-              : "sm:translate-y-0 sm:translate-x-full"
-          }
+          /* Desktop layout: Side Panel */
+          sm:top-16 sm:right-0 sm:left-auto sm:bottom-0 sm:h-full sm:w-80 lg:w-96
+          sm:rounded-none sm:border-t-0 sm:border-l
+          ${isVisible ? "sm:translate-x-0 sm:translate-y-0" : "sm:translate-x-full sm:translate-y-0"}
         `}
       >
-        {/* Handle bar untuk mobile (indikator bisa di-swipe/drag) */}
-        <div className="w-full flex justify-center pt-3 pb-1 sm:hidden">
-          <div className="w-12 h-1.5 rounded-full bg-white/20" />
+        {/* Handle bar kecil untuk drag visual (hanya di HP) */}
+        <div className="w-full flex justify-center pt-3 pb-1 sm:hidden cursor-pointer" onClick={onClose}>
+          <div className="w-12 h-1.5 bg-gray-600/50 rounded-full" />
         </div>
-
         {/* Header panel */}
-        <div className="flex items-start justify-between p-5 sm:p-6 border-b border-white/10">
+        <div className="flex items-start justify-between px-6 pb-4 sm:p-6 border-b border-white/10">
           <div className="flex items-center gap-3">
             {/* Indikator titik merah kecil */}
-            <div className="relative mt-1 hidden sm:block">
+            <div className="relative mt-1">
               <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
             </div>
             <div>
-              <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest font-medium mb-0.5">
+              <p className="text-xs text-gray-500 uppercase tracking-widest font-medium mb-0.5">
                 Informasi Komponen
               </p>
-              <h2 className="text-base sm:text-lg font-bold text-white leading-tight">
+              <h2 className="text-lg font-bold text-white leading-tight">
                 {annotation?.title ?? ""}
               </h2>
             </div>
@@ -68,7 +64,7 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
           <button
             onClick={onClose}
             aria-label="Tutup panel informasi"
-            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 sm:bg-transparent text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150 ml-2"
+            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150 ml-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

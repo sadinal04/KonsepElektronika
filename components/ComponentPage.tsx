@@ -138,14 +138,14 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             </div>
           </div>
 
-          {/* Quick hotspot buttons (disembunyikan saat debug mode) */}
+          {/* Quick hotspot buttons */}
           {!debugMode && (
-            <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 overflow-x-auto pb-1 -mb-1 [&::-webkit-scrollbar]:hidden">
               {component.annotations.map((ann) => (
                 <button
                   key={ann.id}
                   onClick={() => handleAnnotationClick(ann)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-all duration-150 ${
+                  className={`flex-shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium border transition-all duration-150 ${
                     activeAnnotation?.id === ann.id
                       ? "bg-red-500/20 border-red-500/40 text-red-300"
                       : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
