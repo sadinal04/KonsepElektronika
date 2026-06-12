@@ -49,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={inter.variable}>
+    <html lang="id" className={inter.variable} data-scroll-behavior="smooth">
       <body className="bg-gray-950 text-gray-100 antialiased font-sans overflow-x-hidden w-full">
         <Navbar />
         {/* Konten halaman dimulai di bawah Navbar (h-16 = 4rem) */}

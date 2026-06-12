@@ -12,6 +12,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import { Suspense, Component, ReactNode, ErrorInfo } from "react";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import Model from "@/components/three/Model";
@@ -155,7 +156,7 @@ export default function ModelViewer({
               alpha: false,
               powerPreference: "high-performance",
             }}
-            shadows
+            shadows={{ type: THREE.PCFShadowMap }}
             dpr={[1, 2]}
           >
             <Scene
