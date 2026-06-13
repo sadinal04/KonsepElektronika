@@ -176,7 +176,7 @@ export const componentsData: ComponentData[] = [
     category: "aktif",
     description:
       "Komponen semikonduktor aktif yang berfungsi sebagai penguat sinyal dan sakelar elektronik. Transistor adalah komponen fundamental dalam elektronika modern.",
-    modelPath: "/models/transistor.glb",
+    modelPath: "/models/lowpoly_transistor.glb",
     accentColor: "#eab308",
     gradientFrom: "#713f12",
     gradientTo: "#854d0e",
@@ -187,21 +187,21 @@ export const componentsData: ComponentData[] = [
         title: "Base (B)",
         description:
           "Terminal kontrol transistor. Arus kecil pada base mengendalikan arus yang jauh lebih besar antara collector dan emitter.",
-        position: [0.004, -0.13, 0.077],
+        position: [-0.153, 0.091, -0.069],
       },
       {
         id: "transistor-collector",
         title: "Collector (C)",
         description:
           "Terminal pengumpul arus. Arus mengalir dari collector menuju emitter (pada transistor NPN) saat transistor aktif.",
-        position: [0.004, -0.093, -0.001],
+        position: [0.02, 0.041, -0.069],
       },
       {
         id: "transistor-emitter",
         title: "Emitter (E)",
         description:
           "Terminal pemancar arus. Merupakan terminal output utama transistor.",
-        position: [0.004, -0.107, -0.075],
+        position: [0.153, 0.106, -0.069],
       },
       {
         id: "transistor-symbol",
@@ -211,53 +211,69 @@ export const componentsData: ComponentData[] = [
             <p className="text-gray-300">
               Pada skematik, simbol transistor membedakan tipe NPN dan PNP melalui arah panah pada kaki Emitter.
             </p>
-            <div className="flex gap-4 items-center justify-center p-4 bg-gray-800/50 rounded-xl border border-white/5">
+            <div className="flex gap-6 items-center justify-center p-5 bg-gray-800/80 rounded-xl border border-white/10 shadow-inner">
+              
               {/* NPN Symbol */}
-              <div className="flex flex-col items-center gap-2">
-                <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4" className="text-blue-400">
-                  <circle cx="50" cy="50" r="40" />
-                  <line x1="25" y1="50" x2="40" y2="50" />
-                  <line x1="40" y1="35" x2="40" y2="65" />
-                  <line x1="40" y1="40" x2="65" y2="20" />
-                  <line x1="65" y1="20" x2="65" y2="5" />
-                  <line x1="40" y1="60" x2="65" y2="80" />
-                  <line x1="65" y1="80" x2="65" y2="95" />
-                  {/* Panah Keluar (NPN) */}
-                  <polygon points="65,80 55,75 62,68" fill="currentColor" stroke="none" />
-                  <text x="10" y="55" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">B</text>
-                  <text x="70" y="20" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">C</text>
-                  <text x="70" y="90" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">E</text>
+              <div className="flex flex-col items-center gap-3">
+                <svg width="70" height="70" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
+                  {/* Lingkaran Luar */}
+                  <circle cx="50" cy="50" r="38" />
+                  {/* Base Bar & Terminal */}
+                  <line x1="12" y1="50" x2="35" y2="50" />
+                  <line x1="35" y1="35" x2="35" y2="65" strokeWidth="4.5" />
+                  {/* Collector (Atas) */}
+                  <line x1="35" y1="42" x2="60" y2="17" />
+                  <line x1="60" y1="17" x2="60" y2="2" />
+                  {/* Emitter (Bawah) */}
+                  <line x1="35" y1="58" x2="60" y2="83" />
+                  <line x1="60" y1="83" x2="60" y2="98" />
+                  {/* Panah Emitter Keluar (NPN) */}
+                  <polygon points="63,80 50,77 58,68" fill="currentColor" stroke="none" />
+                  
+                  {/* Teks Label */}
+                  <text x="3" y="55" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">B</text>
+                  <text x="65" y="15" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">C</text>
+                  <text x="65" y="93" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">E</text>
                 </svg>
-                <span className="text-xs font-bold text-blue-300">NPN</span>
-                <span className="text-[10px] text-gray-500">(Panah Keluar)</span>
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-sm font-bold text-blue-300 tracking-widest">NPN</span>
+                  <span className="text-[10px] text-gray-400 font-medium">(Panah Keluar)</span>
+                </div>
               </div>
               
-              <div className="w-px h-16 bg-white/10" />
+              <div className="w-px h-24 bg-white/10" />
 
               {/* PNP Symbol */}
-              <div className="flex flex-col items-center gap-2">
-                <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4" className="text-red-400">
-                  <circle cx="50" cy="50" r="40" />
-                  <line x1="25" y1="50" x2="40" y2="50" />
-                  <line x1="40" y1="35" x2="40" y2="65" />
-                  <line x1="40" y1="40" x2="65" y2="20" />
-                  <line x1="65" y1="20" x2="65" y2="5" />
-                  <line x1="40" y1="60" x2="65" y2="80" />
-                  <line x1="65" y1="80" x2="65" y2="95" />
-                  {/* Panah Masuk (PNP) - di kaki Emitter atas untuk gambar standar atau bawah */}
-                  {/* Sesuai gambar referensi PNP: Emitter di atas, Collector di bawah, panah masuk ke base */}
-                  <polygon points="45,46 55,38 48,32" fill="currentColor" stroke="none" />
-                  <text x="10" y="55" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">B</text>
-                  <text x="70" y="20" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">E</text>
-                  <text x="70" y="90" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">C</text>
+              <div className="flex flex-col items-center gap-3">
+                <svg width="70" height="70" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" className="text-red-400">
+                  {/* Lingkaran Luar */}
+                  <circle cx="50" cy="50" r="38" />
+                  {/* Base Bar & Terminal */}
+                  <line x1="12" y1="50" x2="35" y2="50" />
+                  <line x1="35" y1="35" x2="35" y2="65" strokeWidth="4.5" />
+                  {/* Emitter (Atas) - PNP standar */}
+                  <line x1="35" y1="42" x2="60" y2="17" />
+                  <line x1="60" y1="17" x2="60" y2="2" />
+                  {/* Collector (Bawah) */}
+                  <line x1="35" y1="58" x2="60" y2="83" />
+                  <line x1="60" y1="83" x2="60" y2="98" />
+                  {/* Panah Emitter Masuk (PNP) */}
+                  <polygon points="45,43 57,35 48,27" fill="currentColor" stroke="none" />
+                  
+                  {/* Teks Label */}
+                  <text x="3" y="55" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">B</text>
+                  <text x="65" y="15" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">E</text>
+                  <text x="65" y="93" fill="currentColor" stroke="none" fontSize="16" fontWeight="bold">C</text>
                 </svg>
-                <span className="text-xs font-bold text-red-300">PNP</span>
-                <span className="text-[10px] text-gray-500">(Panah Masuk)</span>
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-sm font-bold text-red-300 tracking-widest">PNP</span>
+                  <span className="text-[10px] text-gray-400 font-medium">(Panah Masuk)</span>
+                </div>
               </div>
             </div>
           </div>
         ),
-        position: [0.048, 0.138, -0.005],
+        position: [0, 0.647, 0.181],
       },
     ],
   },

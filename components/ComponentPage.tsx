@@ -178,26 +178,7 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             </div>
           </div>
 
-          {/* Tombol Picker Koordinat — hanya GLB */}
-          {isGLB && (
-            <button
-              onClick={toggleDebugMode}
-              title={debugMode ? "Keluar picker" : "Aktifkan Picker Koordinat"}
-              className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] sm:text-xs font-medium border transition-all duration-200 ${
-                debugMode
-                  ? "bg-amber-500/20 border-amber-500/40 text-amber-300"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
-              }`}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="1"/><circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="2" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="22"/>
-                <line x1="2" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="22" y2="12"/>
-              </svg>
-              <span className="hidden sm:inline">{debugMode ? "Picker Aktif" : "Picker"}</span>
-            </button>
-          )}
+
         </div>
 
         {/* Baris 2: Deskripsi (desktop) */}
