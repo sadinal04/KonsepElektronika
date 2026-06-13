@@ -119,12 +119,13 @@ function Scene({
           onPickCoords={onPickCoords}
         />
         {/* Hotspot anotasi — disembunyikan saat mode debug aktif */}
-        {!debugMode && annotations.map((ann) => (
+        {!debugMode && annotations.map((ann, i) => (
           <Annotation
             key={ann.id}
             data={ann}
             isActive={activeAnnotationId === ann.id}
             onClick={onAnnotationClick}
+            index={i + 1}
           />
         ))}
       </Suspense>

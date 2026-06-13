@@ -9,9 +9,9 @@ const nextConfig: NextConfig = {
 
   /**
    * Konfigurasi Turbopack (default bundler Next.js 16+).
-   * Kosong = pakai default, menghilangkan warning "webpack config ignored".
    */
   turbopack: {},
 };
 
 export default nextConfig;
+

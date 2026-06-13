@@ -4,11 +4,11 @@
  * Menampilkan:
  * - Hero section dengan judul skripsi
  * - Deskripsi media pembelajaran
- * - 3 kartu komponen (Resistor, Kapasitor, Induktor)
+ * - Dua seksi komponen: Pasif (3) dan Aktif (3)
  */
 
 import type { Metadata } from "next";
-import { componentsData } from "@/data/annotations";
+import { getComponentsByCategory } from "@/data/annotations";
 import ComponentCard from "@/components/ui/ComponentCard";
 
 export const metadata: Metadata = {
@@ -18,15 +18,15 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const pasif = getComponentsByCategory("pasif");
+  const aktif = getComponentsByCategory("aktif");
+
   return (
     <div className="min-h-screen bg-gray-950 overflow-hidden">
       {/* ── Background dekoratif ─────────────────────────────── */}
       <div className="fixed inset-0 pointer-events-none">
-        {/* Blob atas kiri */}
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px]" />
-        {/* Blob kanan */}
         <div className="absolute top-1/3 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]" />
-        {/* Blob bawah */}
         <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96 h-40 bg-blue-600/10 rounded-full blur-[80px]" />
         {/* Grid background */}
         <div
@@ -48,20 +48,17 @@ export default function HomePage() {
             Media Pembelajaran Interaktif
           </div>
 
-          {/* Judul skripsi */}
+          {/* Judul */}
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6 max-w-4xl mx-auto">
             Perancangan Media Pembelajaran Menggunakan{" "}
-            <span className="text-gradient-primary">
-              Augmented Reality (AR)
-            </span>{" "}
+            <span className="text-gradient-primary">Augmented Reality (AR)</span>{" "}
             pada Materi{" "}
             <span className="text-gradient-primary">Konsep Elektronika</span>
           </h1>
 
           {/* Deskripsi */}
           <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Eksplorasi komponen elektronika dasar secara interaktif melalui
-            model{" "}
+            Eksplorasi komponen elektronika dasar secara interaktif melalui model{" "}
             <strong className="text-gray-300">3 dimensi</strong>. Klik hotspot
             pada model untuk mempelajari setiap bagian komponen secara mendalam.
           </p>
@@ -69,8 +66,8 @@ export default function HomePage() {
           {/* Stats */}
           <div className="flex items-center justify-center gap-8 sm:gap-12 mb-14">
             {[
-              { value: "3", label: "Komponen" },
-              { value: "9", label: "Anotasi" },
+              { value: "6", label: "Komponen" },
+              { value: "18", label: "Anotasi" },
               { value: "AR", label: "Teknologi" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
@@ -85,21 +82,57 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Kartu Komponen ───────────────────────────────────── */}
-        <section className="pb-20">
-          <h2 className="text-center text-sm font-medium text-gray-500 uppercase tracking-widest mb-8">
-            Pilih Komponen untuk Dieksplorasi
-          </h2>
+        {/* ── A. Komponen Pasif ─────────────────────────────── */}
+        <section className="pb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px flex-1 bg-white/5"/>
+            <div className="flex items-center gap-2">
+              <span
+                className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full"
+                style={{ background: "rgba(99,102,241,0.12)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.25)" }}
+              >
+                A
+              </span>
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                Komponen Pasif
+              </h2>
+            </div>
+            <div className="h-px flex-1 bg-white/5"/>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {componentsData.map((component) => (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {pasif.map((component) => (
               <ComponentCard key={component.id} component={component} />
             ))}
           </div>
-
         </section>
 
-        {/* ── Footer info ──────────────────────────────────────── */}
+        {/* ── B. Komponen Aktif ─────────────────────────────── */}
+        <section className="pb-20">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px flex-1 bg-white/5"/>
+            <div className="flex items-center gap-2">
+              <span
+                className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full"
+                style={{ background: "rgba(34,197,94,0.12)", color: "#4ade80", border: "1px solid rgba(34,197,94,0.25)" }}
+              >
+                B
+              </span>
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                Komponen Aktif
+              </h2>
+            </div>
+            <div className="h-px flex-1 bg-white/5"/>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {aktif.map((component) => (
+              <ComponentCard key={component.id} component={component} />
+            ))}
+          </div>
+        </section>
+
+        {/* ── Footer ──────────────────────────────────────────── */}
         <footer className="pb-8 text-center">
           <p className="text-gray-600 text-xs">
             Media Pembelajaran · Augmented Reality · Konsep Elektronika

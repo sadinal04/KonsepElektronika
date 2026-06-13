@@ -4,7 +4,7 @@
  * Menggunakan <Html> dari @react-three/drei untuk overlay DOM di ruang 3D.
  *
  * Struktur visual:
- *  [titik merah pulse] → [garis penunjuk] → [label teks]
+ *  [Bulatan berwarna konsisten berisi angka]
  */
 
 "use client";
@@ -12,22 +12,55 @@
 import { Html } from "@react-three/drei";
 import { AnnotationProps } from "@/types";
 
-export default function Annotation({ data, isActive, onClick }: AnnotationProps) {
+// Palette warna konsisten berdasarkan index anotasi
+const COLOR_PALETTE = [
+  "bg-green-500",    // 1
+  "bg-blue-500",     // 2
+  "bg-amber-500",    // 3
+  "bg-purple-500",   // 4
+  "bg-pink-500",     // 5
+  "bg-teal-500",     // 6
+  "bg-rose-500",     // 7
+  "bg-indigo-500",   // 8
+];
+
+const BORDER_PALETTE = [
+  "border-green-300",
+  "border-blue-300",
+  "border-amber-300",
+  "border-purple-300",
+  "border-pink-300",
+  "border-teal-300",
+  "border-rose-300",
+  "border-indigo-300",
+];
+
+const SHADOW_PALETTE = [
+  "shadow-[0_0_12px_rgba(34,197,94,0.7)]",
+  "shadow-[0_0_12px_rgba(59,130,246,0.7)]",
+  "shadow-[0_0_12px_rgba(245,158,11,0.7)]",
+  "shadow-[0_0_12px_rgba(168,85,247,0.7)]",
+  "shadow-[0_0_12px_rgba(236,72,153,0.7)]",
+  "shadow-[0_0_12px_rgba(20,184,166,0.7)]",
+  "shadow-[0_0_12px_rgba(244,63,94,0.7)]",
+  "shadow-[0_0_12px_rgba(99,102,241,0.7)]",
+];
+
+export default function Annotation({ data, isActive, onClick, index }: AnnotationProps) {
+  // Ambil warna berdasarkan index (loop kembali ke awal jika index lebih dari palette)
+  const colorIndex = (index - 1) % COLOR_PALETTE.length;
+  const bgColor = COLOR_PALETTE[colorIndex];
+  const borderColor = BORDER_PALETTE[colorIndex];
+  const shadow = SHADOW_PALETTE[colorIndex];
+
   return (
-    /**
-     * Html dari Drei: menempatkan elemen DOM pada posisi 3D.
-     * distanceFactor: ukuran skala berubah sesuai jarak kamera.
-     */
     <Html
       position={data.position}
       distanceFactor={4}
-      // occlude dihapus: hotspot yang berada di permukaan model
-      // akan tersembunyi oleh occlusion detection — selalu tampilkan
       zIndexRange={[10, 100]}
     >
-      {/* Wrapper interaktif: klik untuk buka panel info */}
       <div
-        className="relative flex items-center cursor-pointer group select-none"
+        className="relative cursor-pointer group select-none"
         onClick={(e) => {
           e.stopPropagation();
           onClick(data);
@@ -35,46 +68,44 @@ export default function Annotation({ data, isActive, onClick }: AnnotationProps)
         role="button"
         aria-label={`Hotspot: ${data.title}`}
       >
-        {/* ── Titik merah dengan animasi pulse ──────────── */}
-        <div className="relative flex-shrink-0">
-          {/* Ring pulse luar (animasi) */}
-          <div
-            className={`absolute inset-0 rounded-full transition-all duration-300 ${
-              isActive
-                ? "bg-red-400/30 scale-[2.5] animate-ping"
-                : "bg-red-500/20 scale-[2] animate-ping"
-            }`}
-          />
-          {/* Titik inti */}
-          <div
-            className={`relative w-3 h-3 rounded-full border-2 transition-all duration-200 shadow-lg ${
-              isActive
-                ? "bg-white border-red-400 scale-125 shadow-[0_0_12px_rgba(239,68,68,0.9)]"
-                : "bg-red-500 border-red-300 hover:scale-110 shadow-[0_0_8px_rgba(239,68,68,0.7)]"
-            }`}
-          />
-        </div>
-
-        {/* ── Garis penunjuk ────────────────────────────── */}
-        <div
-          className={`h-px w-8 transition-all duration-200 ${
-            isActive ? "bg-red-400" : "bg-red-500/70 group-hover:bg-red-400"
-          }`}
-        />
-
-        {/* ── Label teks ────────────────────────────────── */}
+        {/* Titik mungil penanda koordinat asli (ditengah 0,0) */}
+        <div className={`absolute top-0 left-0 w-1.5 h-1.5 -ml-[3px] -mt-[3px] rounded-full ${bgColor} shadow-sm z-10`} />
+        
+        {/* Garis pendek diagonal (Panjang 24px, sudut 45 derajat) */}
+        {/* Ujung garis ini akan berada di koordinat X: ~17px, Y: ~-17px */}
+        <div className={`absolute top-0 left-0 w-[24px] h-[1.5px] origin-left -rotate-45 ${bgColor} opacity-80`} />
+        
+        {/* Bulatan angka (20x20) */}
+        {/* Posisi disesuaikan agar pusat bulatan (10px, 10px) jatuh persis di ujung garis (17, -17) */}
         <div
           className={`
-            px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap
-            border transition-all duration-200
-            ${
-              isActive
-                ? "bg-red-500 text-white border-red-400 shadow-[0_0_16px_rgba(239,68,68,0.5)]"
-                : "bg-gray-900/90 text-gray-200 border-white/20 group-hover:bg-gray-800 group-hover:text-white group-hover:border-red-500/50"
-            }
+            absolute top-[-27px] left-[7px]
+            flex items-center justify-center
+            w-[20px] h-[20px] rounded-full border-[1.5px] text-[10px] font-bold text-white
+            transition-transform duration-200 origin-center
+            ${bgColor} ${borderColor} ${shadow}
+            group-hover:scale-110 group-hover:brightness-110
+            ${isActive ? "scale-125 ring-2 ring-white/50 ring-offset-1 ring-offset-gray-900 brightness-110" : "scale-100"}
+          `}
+        >
+          {index}
+        </div>
+
+        {/* Tooltip Judul (Muncul saat di-hover) */}
+        <div
+          className={`
+            absolute top-[-60px] left-[17px] -translate-x-1/2
+            px-2.5 py-1 rounded-md bg-gray-900/95 text-[11px] font-semibold text-white whitespace-nowrap
+            border border-white/20 shadow-xl pointer-events-none
+            opacity-0 translate-y-2 transition-all duration-200 ease-out
+            group-hover:opacity-100 group-hover:translate-y-0
+            z-20
           `}
         >
           {data.title}
+          {/* Segitiga panah ke bawah */}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900/95" />
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-white/20 mt-[1px] -z-10" />
         </div>
       </div>
     </Html>
