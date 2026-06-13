@@ -91,9 +91,10 @@ export default function Annotation({ data, isActive, onClick, index }: Annotatio
           {index}
         </div>
 
-        {/* Tooltip Judul (Muncul saat di-hover) */}
+        {/* Tooltip Judul (Muncul saat di-hover, hanya untuk desktop) */}
         <div
           className={`
+            hidden sm:block
             absolute top-[-60px] left-[17px] -translate-x-1/2
             px-2.5 py-1 rounded-md bg-gray-900/95 text-[11px] font-semibold text-white whitespace-nowrap
             border border-white/20 shadow-xl pointer-events-none
