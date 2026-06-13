@@ -183,7 +183,6 @@ export default function Navbar() {
               {/* Separator */}
               <div className="w-px h-4 bg-white/10 mx-1"/>
               {/* Pasif links */}
-              <span className="text-[9px] text-gray-600 uppercase tracking-widest mr-1">Pasif:</span>
               {pasifLinks.map((link) => (
                 <Link key={link.href} href={link.href}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
@@ -195,7 +194,6 @@ export default function Navbar() {
               {/* Separator */}
               <div className="w-px h-4 bg-white/10 mx-1"/>
               {/* Aktif links */}
-              <span className="text-[9px] text-gray-600 uppercase tracking-widest mr-1">Aktif:</span>
               {aktifLinks.map((link) => (
                 <Link key={link.href} href={link.href}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
