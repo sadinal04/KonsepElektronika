@@ -19,6 +19,7 @@ export const componentsData: ComponentData[] = [
     description:
       "Komponen pasif yang menghambat aliran arus listrik. Nilai hambatannya dapat dibaca melalui pita warna yang tercetak pada tubuhnya.",
     modelPath: "/models/resistor.glb",
+    introAudio: "/audio/resistor_audio/intro_resistor.mp3",
     accentColor: "#f97316",
     gradientFrom: "#7c2d12",
     gradientTo: "#9a3412",
@@ -30,6 +31,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Bagian utama resistor yang melindungi elemen resistif di dalamnya. Terbuat dari bahan keramik atau karbon yang tahan panas dan mampu menyerap daya.",
         position: [0.063, 0.347, 0.15],
+        audioPath: "/audio/resistor_audio/1.body_resistor.mp3",
       },
       {
         id: "resistor-bands",
@@ -37,6 +39,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Pita warna yang menunjukkan nilai resistansi resistor. Setiap warna mewakili angka tertentu; kombinasinya menentukan nilai hambatan dalam satuan Ohm (Ω).",
         position: [0.019, -0.069, 0.145],
+        audioPath: "/audio/resistor_audio/2.color_bands.mp3",
       },
       {
         id: "resistor-lead",
@@ -44,6 +47,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Kaki resistor yang digunakan untuk menghubungkan resistor ke rangkaian elektronik. Terbuat dari kawat logam yang mudah disolder ke PCB.",
         position: [0, -0.671, 0.045],
+        audioPath: "/audio/resistor_audio/3.lead_wire.mp3",
       },
     ],
   },
@@ -57,6 +61,7 @@ export const componentsData: ComponentData[] = [
     description:
       "Komponen pasif yang menyimpan dan melepaskan energi listrik. Kapasitor digunakan untuk memfilter sinyal, menstabilkan tegangan, dan menyimpan energi.",
     modelPath: "/models/capacitor.glb",
+    introAudio: "/audio/kapasitor_audio/intro_kapasitor.mp3",
     accentColor: "#3b82f6",
     gradientFrom: "#1e3a8a",
     gradientTo: "#1e40af",
@@ -68,6 +73,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Bagian utama yang menyimpan muatan listrik. Terdiri dari dua lempeng konduktor (elektroda) yang dipisahkan oleh material dielektrik.",
         position: [0.412, 0.152, 0.125],
+        audioPath: "/audio/kapasitor_audio/1.body_capacitor.mp3",
       },
       {
         id: "capacitor-polarity",
@@ -75,6 +81,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Penanda kutub positif atau negatif pada kapasitor. Pada kapasitor elektrolit, pemasangan terbalik dapat merusak komponen, sehingga penanda ini sangat penting.",
         position: [0.067, 0.312, 0.428],
+        audioPath: "/audio/kapasitor_audio/2.polarity_marking.mp3",
       },
       {
         id: "capacitor-terminal",
@@ -82,6 +89,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Kaki kapasitor yang digunakan untuk koneksi ke rangkaian elektronik. Kaki positif biasanya lebih panjang dari kaki negatif untuk memudahkan identifikasi.",
         position: [0.021, -0.853, 0.233],
+        audioPath: "/audio/kapasitor_audio/3.terminal_leads.mp3",
       },
     ],
   },
@@ -95,6 +103,7 @@ export const componentsData: ComponentData[] = [
     description:
       "Komponen pasif yang menyimpan energi dalam bentuk medan magnet. Induktor terbuat dari kawat yang dililitkan, digunakan dalam filter dan transformasi energi.",
     modelPath: "/models/inductor.glb",
+    introAudio: "/audio/induktor_audio/intro_induktor.mp3",
     accentColor: "#a855f7",
     gradientFrom: "#4c1d95",
     gradientTo: "#5b21b6",
@@ -106,6 +115,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Lilitan kawat yang menghasilkan medan magnet saat dialiri arus listrik. Jumlah lilitan (turns) menentukan nilai induktansi dalam satuan Henry (H).",
         position: [0.707, -0.063, -0.133],
+        audioPath: "/audio/induktor_audio/1.coil_winding.mp3",
       },
       {
         id: "inductor-core",
@@ -113,6 +123,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Inti induktor yang memperkuat medan magnet yang dihasilkan lilitan. Material inti (udara, besi, ferit) sangat memengaruhi karakteristik induktor.",
         position: [0.699, -0.216, 0.232],
+        audioPath: "/audio/induktor_audio/2.core.mp3",
       },
       {
         id: "inductor-terminal",
@@ -120,6 +131,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Kaki induktor yang digunakan untuk koneksi ke rangkaian elektronik. Menghubungkan induktor ke jalur PCB untuk menyalurkan arus listrik.",
         position: [0.863, -0.449, 0.241],
+        audioPath: "/audio/induktor_audio/3.terminal_leads.mp3",
       },
     ],
   },
@@ -139,6 +151,7 @@ export const componentsData: ComponentData[] = [
     sketchfabUrl: "https://sketchfab.com/models/0fe6dcd28d7445e8b47204cd4abb622d/embed?autostart=1&annotations_visible=1&transparent=1",
     secondarySketchfabUrl: "https://sketchfab.com/models/0c5855559ee5465aa8044a0fdbac39fb/embed?autostart=1&annotations_visible=1&transparent=1",
     secondaryLabel: "LED (Light-Emitting Diode)",
+    introAudio: "/audio/dioda_audio/intro_dioda.mp3",
     accentColor: "#22c55e",
     gradientFrom: "#14532d",
     gradientTo: "#15803d",
@@ -150,6 +163,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Terminal positif dioda tempat arus masuk. Arus mengalir dari anode menuju katode dalam kondisi forward bias.",
         position: [0, 0, 0],
+        audioPath: "/audio/dioda_audio/1.anode.mp3",
       },
       {
         id: "dioda-cathode",
@@ -157,6 +171,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Terminal negatif dioda, ditandai dengan garis atau band perak/putih. Arus keluar dari katode dalam kondisi forward bias.",
         position: [0, 0, 0],
+        audioPath: "/audio/dioda_audio/2.katode.mp3",
       },
       {
         id: "dioda-body",
@@ -164,6 +179,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Badan dioda yang berisi junction P-N (pertemuan semikonduktor tipe-P dan tipe-N). Junction inilah yang menentukan arah aliran arus.",
         position: [0, 0, 0],
+        audioPath: "/audio/dioda_audio/3.body_dioda.mp3",
       },
     ],
   },
@@ -177,6 +193,7 @@ export const componentsData: ComponentData[] = [
     description:
       "Komponen semikonduktor aktif yang berfungsi sebagai penguat sinyal dan sakelar elektronik. Transistor adalah komponen fundamental dalam elektronika modern.",
     modelPath: "/models/lowpoly_transistor.glb",
+    introAudio: "/audio/transistor_audio/intro_transistor.mp3",
     accentColor: "#eab308",
     gradientFrom: "#713f12",
     gradientTo: "#854d0e",
@@ -188,6 +205,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Terminal kontrol transistor. Arus kecil pada base mengendalikan arus yang jauh lebih besar antara collector dan emitter.",
         position: [-0.153, 0.091, -0.069],
+        audioPath: "/audio/transistor_audio/1.base.mp3",
       },
       {
         id: "transistor-collector",
@@ -195,6 +213,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Terminal pengumpul arus. Arus mengalir dari collector menuju emitter (pada transistor NPN) saat transistor aktif.",
         position: [0.02, 0.041, -0.069],
+        audioPath: "/audio/transistor_audio/2.collector.mp3",
       },
       {
         id: "transistor-emitter",
@@ -202,6 +221,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Terminal pemancar arus. Merupakan terminal output utama transistor.",
         position: [0.153, 0.106, -0.069],
+        audioPath: "/audio/transistor_audio/3.emmiter.mp3",
       },
       {
         id: "transistor-symbol",
@@ -274,6 +294,7 @@ export const componentsData: ComponentData[] = [
           </div>
         ),
         position: [0, 0.647, 0.181],
+        audioPath: "/audio/transistor_audio/4.simbol.mp3",
       },
     ],
   },
@@ -287,6 +308,7 @@ export const componentsData: ComponentData[] = [
     description:
       "Chip elektronik yang mengintegrasikan jutaan komponen (transistor, resistor, kapasitor) dalam satu keeping silikon. Otak dari semua perangkat elektronik modern.",
     modelPath: "/models/integrated_circuit_ic.glb",
+    introAudio: "/audio/ic_audio/intro_ic.mp3",
     accentColor: "#06b6d4",
     gradientFrom: "#164e63",
     gradientTo: "#155e75",
@@ -298,6 +320,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Kaki-kaki logam yang menghubungkan chip ke rangkaian luar. Setiap pin memiliki fungsi spesifik (power, ground, input, output) sesuai datasheet IC.",
         position: [0.768, -0.423, 0.855], // ✓ final
+        audioPath: "/audio/ic_audio/1.pin.mp3",
       },
       {
         id: "ic-package",
@@ -305,6 +328,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Casing pelindung chip silikon. Paket DIP (Dual In-line Package) yang umum ini memudahkan pemasangan di breadboard maupun PCB.",
         position: [0.255, 0.56, 0.055], // ✓ final
+        audioPath: "/audio/ic_audio/2.casing.mp3",
       },
       {
         id: "ic-notch",
@@ -312,6 +336,7 @@ export const componentsData: ComponentData[] = [
         description:
           "Lekukan atau tanda di ujung IC sebagai penanda orientasi. Pin 1 selalu berada di sisi kiri notch, digunakan sebagai referensi pemasangan IC.",
         position: [0.708, 0.303, 0.776], // ✓ final
+        audioPath: "/audio/ic_audio/3.notch.mp3",
       },
     ],
   },

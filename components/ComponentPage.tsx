@@ -9,7 +9,7 @@
 
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import InfoPanel from "@/components/panels/InfoPanel";
@@ -100,11 +100,98 @@ export default function ComponentPage({ component }: ComponentPageProps) {
   const [pickedCoords, setPickedCoords]         = useState<[number,number,number] | null>(null);
   const [copied, setCopied]                     = useState(false);
 
-  const handleAnnotationClick = useCallback((data: AnnotationData) => {
-    setActiveAnnotation(prev => prev?.id === data.id ? null : data);
+  // ── SINGLE GLOBAL AUDIO REF (hanya 1 audio bermain sekaligus) ──
+  const globalAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // State terpisah untuk tiap tombol UI (bukan untuk audio yang berbeda)
+  const [isIntroPlaying, setIsIntroPlaying] = useState(false);
+  const [isAnnPlaying,   setIsAnnPlaying]   = useState(false);
+
+  /** Hentikan audio apa pun yang sedang berjalan & reset semua state */
+  const stopAllAudio = useCallback(() => {
+    if (globalAudioRef.current) {
+      globalAudioRef.current.pause();
+      globalAudioRef.current.currentTime = 0;
+      globalAudioRef.current = null;
+    }
+    setIsIntroPlaying(false);
+    setIsAnnPlaying(false);
   }, []);
 
-  const handleClosePanel = useCallback(() => setActiveAnnotation(null), []);
+  /** Putar audio intro (stop yang lain dulu) */
+  const playIntroAudio = useCallback((src: string) => {
+    stopAllAudio();
+    const audio = new Audio(src);
+    globalAudioRef.current = audio;
+    setIsIntroPlaying(true);
+    audio.play().catch(() => setIsIntroPlaying(false));
+    audio.addEventListener("ended", () => setIsIntroPlaying(false));
+  }, [stopAllAudio]);
+
+  /** Toggle intro: pause jika sedang main, play ulang jika berhenti */
+  const toggleIntroAudio = useCallback(() => {
+    const audio = globalAudioRef.current;
+    if (!audio) return;
+    if (isIntroPlaying) {
+      audio.pause();
+      setIsIntroPlaying(false);
+    } else {
+      audio.play().catch(() => setIsIntroPlaying(false));
+      setIsIntroPlaying(true);
+    }
+  }, [isIntroPlaying]);
+
+  /** Putar audio anotasi (stop yang lain — termasuk intro — dulu) */
+  const playAnnAudio = useCallback((src: string) => {
+    stopAllAudio();
+    const audio = new Audio(src);
+    globalAudioRef.current = audio;
+    setIsAnnPlaying(true);
+    audio.play().catch(() => setIsAnnPlaying(false));
+    audio.addEventListener("ended", () => setIsAnnPlaying(false));
+  }, [stopAllAudio]);
+
+  /** Toggle ann audio: pause jika sedang main, play ulang jika berhenti */
+  const toggleAnnAudio = useCallback(() => {
+    const audio = globalAudioRef.current;
+    if (!audio) return;
+    if (isAnnPlaying) {
+      audio.pause();
+      setIsAnnPlaying(false);
+    } else {
+      audio.play().catch(() => setIsAnnPlaying(false));
+      setIsAnnPlaying(true);
+    }
+  }, [isAnnPlaying]);
+
+  // Putar intro otomatis saat halaman dibuka
+  useEffect(() => {
+    if (component.introAudio) {
+      const t = setTimeout(() => playIntroAudio(component.introAudio!), 600);
+      return () => { clearTimeout(t); stopAllAudio(); };
+    }
+    return () => stopAllAudio();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [component.id]);
+
+  // ── Handlers ───────────────────────────────────────────
+  const handleAnnotationClick = useCallback((data: AnnotationData) => {
+    const isSame = (prev: AnnotationData | null) => prev?.id === data.id;
+    setActiveAnnotation(prev => isSame(prev) ? null : data);
+    // Setiap klik nomor → stop semua & putar audio anotasi yang baru
+    if (data.audioPath) {
+      playAnnAudio(data.audioPath);
+    } else {
+      stopAllAudio();
+    }
+  }, [playAnnAudio, stopAllAudio]);
+
+  // Stop annotation audio saat panel ditutup
+  const handleClosePanel = useCallback(() => {
+    setActiveAnnotation(null);
+    stopAllAudio();
+  }, [stopAllAudio]);
+
 
   const handlePickCoords = useCallback((pos: [number,number,number]) => {
     setPickedCoords(pos);
@@ -135,15 +222,15 @@ export default function ComponentPage({ component }: ComponentPageProps) {
 
       {/* ── Header ─────────────────────────────────────────── */}
       <div
-        className="flex-shrink-0 border-b border-white/5"
-        style={{ background: "rgba(3,7,18,0.95)" }}
+        className="flex-shrink-0 border-b border-slate-200"
+        style={{ background: "rgba(255,255,255,0.95)" }}
       >
         {/* Baris 1: Kembali + Nama + Tombol Picker */}
         <div className="max-w-7xl mx-auto flex items-center gap-3 px-4 sm:px-6 pt-2.5 pb-2">
 
           <Link
             href="/"
-            className="flex-shrink-0 flex items-center gap-1.5 text-gray-400 hover:text-white text-xs sm:text-sm transition-colors"
+            className="flex-shrink-0 flex items-center gap-1.5 text-slate-500 hover:text-slate-900 text-xs sm:text-sm transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -152,25 +239,25 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             <span className="hidden xs:inline">Kembali</span>
           </Link>
 
-          <div className="w-px h-4 bg-white/10 flex-shrink-0"/>
+          <div className="w-px h-4 bg-slate-200 flex-shrink-0"/>
 
           {/* Icon + Nama */}
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             <div className="flex-shrink-0 p-1.5 rounded-lg"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
+              style={{ background: "rgba(15,23,42,0.04)", border: "1px solid rgba(15,23,42,0.08)" }}>
               <ComponentIcon id={component.id}/>
             </div>
             <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-white leading-tight truncate">
+              <h1 className="text-sm font-semibold text-slate-900 leading-tight truncate">
                 {component.nameBahasa}
               </h1>
               <span
                 className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full"
                 style={{
                   background: component.category === "aktif"
-                    ? "rgba(34,197,94,0.12)" : "rgba(99,102,241,0.12)",
-                  color: component.category === "aktif" ? "#4ade80" : "#818cf8",
-                  border: `1px solid ${component.category === "aktif" ? "rgba(34,197,94,0.25)" : "rgba(99,102,241,0.25)"}`,
+                    ? "rgba(22,163,74,0.08)" : "rgba(79,70,229,0.08)",
+                  color: component.category === "aktif" ? "#16a34a" : "#4f46e5",
+                  border: `1px solid ${component.category === "aktif" ? "rgba(22,163,74,0.2)" : "rgba(79,70,229,0.2)"}`,
                 }}
               >
                 {component.category}
@@ -178,12 +265,41 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             </div>
           </div>
 
+          {/* ── Tombol Audio Intro (header) ───────────────────── */}
+          {component.introAudio && (
+            <button
+              onClick={toggleIntroAudio}
+              title={isIntroPlaying ? "Pause Intro" : "Putar ulang Intro"}
+              className={`flex-shrink-0 flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[10px] sm:text-xs font-medium border transition-all duration-200 ${
+                isIntroPlaying
+                  ? "bg-indigo-50 border-indigo-200 text-indigo-700"
+                  : "bg-slate-50 border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              {isIntroPlaying ? (
+                <span className="flex items-end gap-[2px] h-3.5">
+                  <span className="w-[3px] bg-current rounded-full animate-[audiobar1_0.8s_ease-in-out_infinite]" style={{ height: "60%" }} />
+                  <span className="w-[3px] bg-current rounded-full animate-[audiobar2_0.8s_ease-in-out_infinite_0.15s]" style={{ height: "100%" }} />
+                  <span className="w-[3px] bg-current rounded-full animate-[audiobar3_0.8s_ease-in-out_infinite_0.3s]" style={{ height: "40%" }} />
+                  <span className="w-[3px] bg-current rounded-full animate-[audiobar1_0.8s_ease-in-out_infinite_0.45s]" style={{ height: "80%" }} />
+                </span>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                  fill="currentColor" stroke="none">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              )}
+              <span className="hidden sm:inline">
+                {isIntroPlaying ? "Intro" : "Intro"}
+              </span>
+            </button>
+          )}
 
         </div>
 
         {/* Baris 2: Deskripsi (desktop) */}
         <div className="hidden sm:block max-w-7xl mx-auto px-4 sm:px-6 pb-1.5">
-          <p className="text-[11px] text-gray-500 leading-relaxed">{component.description}</p>
+          <p className="text-[11px] text-slate-500 leading-relaxed">{component.description}</p>
         </div>
 
         {/* Baris 3: Tombol anotasi */}
@@ -196,8 +312,8 @@ export default function ComponentPage({ component }: ComponentPageProps) {
                   onClick={() => handleAnnotationClick(ann)}
                   className={`flex-shrink-0 px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium border transition-all duration-150 ${
                     activeAnnotation?.id === ann.id
-                      ? "bg-indigo-500/20 border-indigo-500/40 text-indigo-300"
-                      : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
                   {ann.title}
@@ -210,7 +326,7 @@ export default function ComponentPage({ component }: ComponentPageProps) {
 
       {/* ── Area Utama ─────────────────────────────────────── */}
       <div className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-950 to-gray-900"/>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-slate-50 to-slate-100"/>
 
         {/* ── Dual Sketchfab (ada model kedua) ─────────────── */}
         {isSketchfab && component.secondarySketchfabUrl ? (
@@ -220,9 +336,9 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             <div className="flex-1 flex flex-col min-h-0 relative" style={{ minHeight: 0 }}>
               {/* Label */}
               <div className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 z-10"
-                style={{ background: "rgba(3,7,18,0.80)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400"/>
-                <span className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest">
+                style={{ background: "rgba(255,255,255,0.80)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(15,23,42,0.08)" }}>
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500"/>
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-widest">
                   {component.nameBahasa}
                 </span>
               </div>
@@ -233,15 +349,15 @@ export default function ComponentPage({ component }: ComponentPageProps) {
             </div>
 
             {/* Divider vertikal (desktop) / horizontal (mobile) */}
-            <div className="flex-shrink-0 sm:w-px sm:h-auto h-px w-auto bg-white/5"/>
+            <div className="flex-shrink-0 sm:w-px sm:h-auto h-px w-auto bg-slate-200"/>
 
             {/* Model kedua */}
             <div className="flex-1 flex flex-col min-h-0 relative" style={{ minHeight: 0 }}>
               {/* Label */}
               <div className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 z-10"
-                style={{ background: "rgba(3,7,18,0.80)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"/>
-                <span className="text-[10px] font-semibold text-gray-300 uppercase tracking-widest">
+                style={{ background: "rgba(255,255,255,0.80)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(15,23,42,0.08)" }}>
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"/>
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-widest">
                   {component.secondaryLabel}
                 </span>
               </div>
@@ -277,9 +393,9 @@ export default function ComponentPage({ component }: ComponentPageProps) {
               { icon: <IconClick/>,  text: "Klik: Lihat Info" },
             ] as { icon: React.ReactNode; text: string }[]).map((h) => (
               <div key={h.text} className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-                style={{ background: "rgba(0,0,0,0.50)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                <span className="text-indigo-400 flex-shrink-0">{h.icon}</span>
-                <span className="text-[11px] text-gray-400 whitespace-nowrap">{h.text}</span>
+                style={{ background: "rgba(255,255,255,0.70)", backdropFilter: "blur(8px)", border: "1px solid rgba(15,23,42,0.08)" }}>
+                <span className="text-indigo-600 flex-shrink-0">{h.icon}</span>
+                <span className="text-[11px] text-slate-600 whitespace-nowrap">{h.text}</span>
               </div>
             ))}
           </div>
@@ -348,19 +464,24 @@ export default function ComponentPage({ component }: ComponentPageProps) {
         {isSketchfab && !component.secondarySketchfabUrl && (
           <div className="absolute bottom-4 right-4 z-10 pointer-events-none">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ background: "rgba(0,0,0,0.60)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.07)" }}>
+              style={{ background: "rgba(255,255,255,0.80)", backdropFilter: "blur(8px)", border: "1px solid rgba(15,23,42,0.08)" }}>
               <svg xmlns="http://www.w3.org/2000/svg" width={11} height={11} viewBox="0 0 24 24"
-                fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                fill="none" stroke="#4f46e5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <span className="text-[10px] text-gray-500">Drag: Rotasi · Scroll: Zoom · Gunakan kontrol Sketchfab</span>
+              <span className="text-[10px] text-slate-600">Drag: Rotasi · Scroll: Zoom · Gunakan kontrol Sketchfab</span>
             </div>
           </div>
         )}
 
         {/* Info Panel */}
         {!debugMode && (
-          <InfoPanel annotation={activeAnnotation} onClose={handleClosePanel}/>
+          <InfoPanel
+            annotation={activeAnnotation}
+            onClose={handleClosePanel}
+            onReplayAudio={activeAnnotation?.audioPath ? toggleAnnAudio : undefined}
+            isAudioPlaying={isAnnPlaying}
+          />
         )}
       </div>
     </div>

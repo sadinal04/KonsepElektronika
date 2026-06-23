@@ -10,8 +10,8 @@ const navLinks = [
     href: "/",
     label: "Home",
     desc: "Halaman Utama",
-    iconColor: "text-indigo-400",
-    activeBg: "bg-indigo-500/15 border-indigo-500/30 text-indigo-300",
+    iconColor: "text-indigo-600",
+    activeBg: "bg-indigo-50 border-indigo-200 text-indigo-700",
     category: null,
   },
   // Pasif
@@ -19,24 +19,24 @@ const navLinks = [
     href: "/resistor",
     label: "Resistor",
     desc: "Penghambat Arus",
-    iconColor: "text-orange-400",
-    activeBg: "bg-orange-500/15 border-orange-500/30 text-orange-300",
+    iconColor: "text-orange-600",
+    activeBg: "bg-orange-50 border-orange-200 text-orange-700",
     category: "pasif" as const,
   },
   {
     href: "/capacitor",
     label: "Kapasitor",
     desc: "Penyimpan Muatan",
-    iconColor: "text-blue-400",
-    activeBg: "bg-blue-500/15 border-blue-500/30 text-blue-300",
+    iconColor: "text-blue-600",
+    activeBg: "bg-blue-50 border-blue-200 text-blue-700",
     category: "pasif" as const,
   },
   {
     href: "/inductor",
     label: "Induktor",
     desc: "Penyimpan Magnet",
-    iconColor: "text-purple-400",
-    activeBg: "bg-purple-500/15 border-purple-500/30 text-purple-300",
+    iconColor: "text-purple-600",
+    activeBg: "bg-purple-50 border-purple-200 text-purple-700",
     category: "pasif" as const,
   },
   // Aktif
@@ -44,24 +44,24 @@ const navLinks = [
     href: "/dioda",
     label: "Dioda",
     desc: "Penyearah Arus",
-    iconColor: "text-green-400",
-    activeBg: "bg-green-500/15 border-green-500/30 text-green-300",
+    iconColor: "text-green-600",
+    activeBg: "bg-green-50 border-green-200 text-green-700",
     category: "aktif" as const,
   },
   {
     href: "/transistor",
     label: "Transistor",
     desc: "Penguat Sinyal",
-    iconColor: "text-yellow-400",
-    activeBg: "bg-yellow-500/15 border-yellow-500/30 text-yellow-300",
+    iconColor: "text-amber-600",
+    activeBg: "bg-amber-50 border-amber-200 text-amber-700",
     category: "aktif" as const,
   },
   {
     href: "/ic",
     label: "IC",
     desc: "Integrated Circuit",
-    iconColor: "text-cyan-400",
-    activeBg: "bg-cyan-500/15 border-cyan-500/30 text-cyan-300",
+    iconColor: "text-cyan-600",
+    activeBg: "bg-cyan-50 border-cyan-200 text-cyan-700",
     category: "aktif" as const,
   },
 ];
@@ -143,10 +143,11 @@ export default function Navbar() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 h-16"
         style={{
-          background: "rgba(3, 7, 18, 0.97)",
+          background: "rgba(255,255,255,0.95)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          borderBottom: "1px solid rgba(15,23,42,0.08)",
+          boxShadow: "0 1px 12px rgba(15,23,42,0.06)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
@@ -158,14 +159,14 @@ export default function Navbar() {
               <div className="flex flex-col leading-none">
                 <span className="text-sm sm:text-base font-bold"
                   style={{
-                    background: "linear-gradient(135deg, #818cf8 0%, #c084fc 100%)",
+                    background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
                   }}>
                   KonsepElektronika
                 </span>
-                <span className="text-[9px] sm:text-[10px] text-gray-500 tracking-widest uppercase font-medium hidden xs:block">
+                <span className="text-[9px] sm:text-[10px] text-slate-400 tracking-widest uppercase font-medium hidden xs:block">
                   Media Pembelajaran AR
                 </span>
               </div>
@@ -176,28 +177,28 @@ export default function Navbar() {
               {/* Home */}
               <Link href="/"
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
-                  pathname === "/" ? homeLink.activeBg : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border-transparent"
+                  pathname === "/" ? homeLink.activeBg : "text-slate-500 hover:text-slate-900 hover:bg-slate-100 border-transparent"
                 }`}>
                 Home
               </Link>
               {/* Separator */}
-              <div className="w-px h-4 bg-white/10 mx-1"/>
+              <div className="w-px h-4 bg-slate-200 mx-1"/>
               {/* Pasif links */}
               {pasifLinks.map((link) => (
                 <Link key={link.href} href={link.href}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
-                    pathname === link.href ? link.activeBg : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border-transparent"
+                    pathname === link.href ? link.activeBg : "text-slate-500 hover:text-slate-900 hover:bg-slate-100 border-transparent"
                   }`}>
                   {link.label}
                 </Link>
               ))}
               {/* Separator */}
-              <div className="w-px h-4 bg-white/10 mx-1"/>
+              <div className="w-px h-4 bg-slate-200 mx-1"/>
               {/* Aktif links */}
               {aktifLinks.map((link) => (
                 <Link key={link.href} href={link.href}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
-                    pathname === link.href ? link.activeBg : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border-transparent"
+                    pathname === link.href ? link.activeBg : "text-slate-500 hover:text-slate-900 hover:bg-slate-100 border-transparent"
                   }`}>
                   {link.label}
                 </Link>
@@ -212,11 +213,11 @@ export default function Navbar() {
                   <Link key={link.href} href={link.href} title={link.label}
                     className={`relative flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 border group ${
                       isActive
-                        ? `bg-indigo-500/15 border-indigo-500/30 ${link.iconColor}`
-                        : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border-transparent"
+                        ? `bg-indigo-50 border-indigo-200 ${link.iconColor}`
+                        : "text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-transparent"
                     }`}>
                     {getNavIcon(link.href, 16)}
-                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none border border-white/10 z-10">
+                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-800 text-white text-[10px] rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none border border-slate-700 z-10">
                       {link.label}
                     </span>
                   </Link>
@@ -230,9 +231,9 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="flex sm:hidden items-center justify-center w-10 h-10 rounded-xl transition-all duration-200 focus:outline-none"
               style={{
-                background: isOpen ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)",
-                border: isOpen ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.1)",
-                color: isOpen ? "#a5b4fc" : "#9ca3af",
+                background: isOpen ? "rgba(79,70,229,0.1)" : "rgba(15,23,42,0.05)",
+                border: isOpen ? "1px solid rgba(79,70,229,0.3)" : "1px solid rgba(15,23,42,0.1)",
+                color: isOpen ? "#4f46e5" : "#64748b",
               }}
               aria-label={isOpen ? "Tutup Menu" : "Buka Menu"}
               aria-expanded={isOpen}
@@ -248,7 +249,7 @@ export default function Navbar() {
       {/* ── Mobile Backdrop ─────────────────────────────────── */}
       <div
         className="fixed inset-0 z-40 sm:hidden transition-opacity duration-300"
-        style={{ background: "rgba(0,0,0,0.7)", opacity: isOpen ? 1 : 0, pointerEvents: isOpen ? "auto" : "none" }}
+        style={{ background: "rgba(15,23,42,0.5)", opacity: isOpen ? 1 : 0, pointerEvents: isOpen ? "auto" : "none" }}
         onClick={() => setIsOpen(false)}
         aria-hidden="true"
       />
@@ -258,8 +259,9 @@ export default function Navbar() {
         id="navbar-mobile-menu"
         className="fixed top-16 left-0 right-0 z-50 sm:hidden transition-all duration-300 ease-out overflow-y-auto"
         style={{
-          background: "#080d1a",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          background: "#ffffff",
+          borderBottom: "1px solid rgba(15,23,42,0.08)",
+          boxShadow: "0 8px 32px rgba(15,23,42,0.1)",
           transform: isOpen ? "translateY(0)" : "translateY(-105%)",
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
@@ -270,23 +272,23 @@ export default function Navbar() {
         <div className="px-3 pt-4 pb-2">
           <Link href="/"
             className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${
-              pathname === "/" ? "bg-white/5" : "hover:bg-white/5"
+              pathname === "/" ? "bg-indigo-50" : "hover:bg-slate-50"
             }`}
-            style={{ border: pathname === "/" ? "1px solid rgba(99,102,241,0.25)" : "1px solid transparent" }}
+            style={{ border: pathname === "/" ? "1px solid rgba(79,70,229,0.2)" : "1px solid transparent" }}
           >
-            <span className={`flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0 text-indigo-400`}
-              style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)" }}>
+            <span className={`flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0 text-indigo-600`}
+              style={{ background: "rgba(79,70,229,0.08)", border: "1px solid rgba(79,70,229,0.15)" }}>
               {getNavIcon("/", 18)}
             </span>
-            <div className="flex-1"><div className="text-sm font-semibold text-white">Home</div><div className="text-xs text-gray-500">Halaman Utama</div></div>
-            <span className={pathname === "/" ? "text-indigo-400" : "text-gray-600"}><IconChevronRight/></span>
+            <div className="flex-1"><div className="text-sm font-semibold text-slate-800">Home</div><div className="text-xs text-slate-400">Halaman Utama</div></div>
+            <span className={pathname === "/" ? "text-indigo-500" : "text-slate-300"}><IconChevronRight/></span>
           </Link>
         </div>
 
         {/* Pasif Section */}
         <div className="px-4 pt-3 pb-1">
-          <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest flex items-center gap-2">
-            <span className="inline-block px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">A</span>
+          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+            <span className="inline-block px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-200">A</span>
             Komponen Pasif
           </p>
         </div>
@@ -295,17 +297,17 @@ export default function Navbar() {
             const isActive = pathname === link.href;
             return (
               <Link key={link.href} href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${isActive ? "bg-white/5" : "hover:bg-white/5"}`}
-                style={{ border: isActive ? "1px solid rgba(99,102,241,0.20)" : "1px solid transparent" }}>
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${isActive ? "bg-slate-50" : "hover:bg-slate-50"}`}
+                style={{ border: isActive ? "1px solid rgba(79,70,229,0.15)" : "1px solid transparent" }}>
                 <span className={`flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0 ${link.iconColor}`}
-                  style={{ background: isActive ? "rgba(99,102,241,0.12)" : "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  style={{ background: isActive ? "rgba(79,70,229,0.08)" : "rgba(15,23,42,0.04)", border: "1px solid rgba(15,23,42,0.07)" }}>
                   {getNavIcon(link.href, 18)}
                 </span>
                 <div className="flex-1">
-                  <div className={`text-sm font-semibold ${isActive ? "text-white" : "text-gray-300"}`}>{link.label}</div>
-                  <div className="text-xs text-gray-500">{link.desc}</div>
+                  <div className={`text-sm font-semibold ${isActive ? "text-slate-900" : "text-slate-600"}`}>{link.label}</div>
+                  <div className="text-xs text-slate-400">{link.desc}</div>
                 </div>
-                <span className={isActive ? "text-indigo-400" : "text-gray-600"}><IconChevronRight/></span>
+                <span className={isActive ? "text-indigo-500" : "text-slate-300"}><IconChevronRight/></span>
               </Link>
             );
           })}
@@ -313,8 +315,8 @@ export default function Navbar() {
 
         {/* Aktif Section */}
         <div className="px-4 pt-3 pb-1">
-          <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest flex items-center gap-2">
-            <span className="inline-block px-1.5 py-0.5 rounded bg-green-500/10 text-green-500 border border-green-500/20">B</span>
+          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+            <span className="inline-block px-1.5 py-0.5 rounded bg-green-50 text-green-600 border border-green-200">B</span>
             Komponen Aktif
           </p>
         </div>
@@ -323,17 +325,17 @@ export default function Navbar() {
             const isActive = pathname === link.href;
             return (
               <Link key={link.href} href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${isActive ? "bg-white/5" : "hover:bg-white/5"}`}
-                style={{ border: isActive ? "1px solid rgba(34,197,94,0.20)" : "1px solid transparent" }}>
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${isActive ? "bg-slate-50" : "hover:bg-slate-50"}`}
+                style={{ border: isActive ? "1px solid rgba(34,197,94,0.2)" : "1px solid transparent" }}>
                 <span className={`flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0 ${link.iconColor}`}
-                  style={{ background: isActive ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  style={{ background: isActive ? "rgba(34,197,94,0.08)" : "rgba(15,23,42,0.04)", border: "1px solid rgba(15,23,42,0.07)" }}>
                   {getNavIcon(link.href, 18)}
                 </span>
                 <div className="flex-1">
-                  <div className={`text-sm font-semibold ${isActive ? "text-white" : "text-gray-300"}`}>{link.label}</div>
-                  <div className="text-xs text-gray-500">{link.desc}</div>
+                  <div className={`text-sm font-semibold ${isActive ? "text-slate-900" : "text-slate-600"}`}>{link.label}</div>
+                  <div className="text-xs text-slate-400">{link.desc}</div>
                 </div>
-                <span className={isActive ? "text-green-400" : "text-gray-600"}><IconChevronRight/></span>
+                <span className={isActive ? "text-green-600" : "text-slate-300"}><IconChevronRight/></span>
               </Link>
             );
           })}
@@ -341,7 +343,7 @@ export default function Navbar() {
 
         {/* Footer */}
         <div className="px-4 py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <p className="text-[10px] text-gray-600 text-center">Media Pembelajaran Elektronika 3D</p>
+          <p className="text-[10px] text-slate-400 text-center">Media Pembelajaran Elektronika 3D</p>
         </div>
       </div>
     </>

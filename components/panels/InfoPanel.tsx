@@ -8,7 +8,10 @@
 
 import { InfoPanelProps } from "@/types";
 
-export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
+export default function InfoPanel({ annotation, onClose, onReplayAudio, isAudioPlaying }: InfoPanelProps & {
+  onReplayAudio?: () => void;
+  isAudioPlaying?: boolean;
+}) {
   /** Panel tampil ketika ada anotasi yang dipilih */
   const isVisible = annotation !== null;
 
@@ -26,11 +29,11 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
       <div
         className={`
           fixed z-40 flex flex-col transition-transform duration-300 ease-out
-          bg-gray-900/95 backdrop-blur-xl shadow-2xl shadow-black/50
+          bg-white/95 backdrop-blur-xl shadow-2xl shadow-slate-200/50
           
           /* Mobile layout: Bottom Sheet */
           bottom-0 left-0 right-0 top-auto h-auto max-h-[75vh]
-          rounded-t-3xl border-t border-white/10
+          rounded-t-3xl border-t border-slate-200
           ${isVisible ? "translate-y-0" : "translate-y-full"}
           
           /* Desktop layout: Side Panel */
@@ -41,46 +44,69 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
       >
         {/* Handle bar kecil untuk drag visual (hanya di HP) */}
         <div className="w-full flex justify-center pt-3 pb-1 sm:hidden cursor-pointer" onClick={onClose}>
-          <div className="w-12 h-1.5 bg-gray-600/50 rounded-full" />
+          <div className="w-12 h-1.5 bg-slate-300 rounded-full" />
         </div>
         {/* Header panel */}
-        <div className="flex items-start justify-between px-6 pb-4 sm:p-6 border-b border-white/10">
+        <div className="flex items-start justify-between px-6 pb-4 sm:p-6 border-b border-slate-200">
           <div className="flex items-center gap-3">
             {/* Indikator titik merah kecil */}
             <div className="relative mt-1">
               <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest font-medium mb-0.5">
+              <p className="text-xs text-slate-500 uppercase tracking-widest font-medium mb-0.5">
                 Informasi Komponen
               </p>
-              <h2 className="text-lg font-bold text-white leading-tight">
+              <h2 className="text-lg font-bold text-slate-900 leading-tight">
                 {annotation?.title ?? ""}
               </h2>
             </div>
           </div>
 
-          {/* Tombol tutup */}
-          <button
-            onClick={onClose}
-            aria-label="Tutup panel informasi"
-            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150 ml-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* Grup tombol kanan: audio (kiri) + tutup (kanan) */}
+          <div className="flex items-center gap-1 flex-shrink-0 ml-2">
+
+            {/* Tombol audio — ikon saja */}
+            {onReplayAudio && annotation?.audioPath && (
+              <button
+                onClick={onReplayAudio}
+                aria-label={isAudioPlaying ? "Pause audio" : "Putar audio"}
+                title={isAudioPlaying ? "Pause" : "Putar audio penjelasan"}
+                className={`w-8 h-8 flex items-center justify-center rounded-lg border transition-all duration-200 ${
+                  isAudioPlaying
+                    ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
+                    : "bg-slate-50 border-slate-200 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 hover:border-indigo-200"
+                }`}
+              >
+                {isAudioPlaying ? (
+                  <span className="flex items-end gap-[2px] h-3.5">
+                    <span className="w-[2.5px] bg-current rounded-full" style={{ height: "55%", animation: "audiobar1 0.8s ease-in-out infinite" }} />
+                    <span className="w-[2.5px] bg-current rounded-full" style={{ height: "100%", animation: "audiobar2 0.8s ease-in-out infinite 0.15s" }} />
+                    <span className="w-[2.5px] bg-current rounded-full" style={{ height: "40%", animation: "audiobar3 0.8s ease-in-out infinite 0.3s" }} />
+                    <span className="w-[2.5px] bg-current rounded-full" style={{ height: "75%", animation: "audiobar1 0.8s ease-in-out infinite 0.45s" }} />
+                  </span>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                )}
+              </button>
+            )}
+
+            {/* Tombol tutup — selalu di ujung kanan */}
+            <button
+              onClick={onClose}
+              aria-label="Tutup panel informasi"
+              className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all duration-150"
             >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+          </div>
         </div>
 
         {/* Konten deskripsi */}
@@ -88,13 +114,13 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
           {annotation && (
             <div className="space-y-4">
               {/* Deskripsi utama */}
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-slate-600 text-sm leading-relaxed">
                 {annotation.description}
               </p>
 
               {/* Divider dekoratif */}
-              <div className="border-t border-white/5 pt-4">
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+              <div className="border-t border-slate-200 pt-4">
+                <div className="flex items-center gap-2 text-xs text-slate-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="12"
@@ -118,10 +144,10 @@ export default function InfoPanel({ annotation, onClose }: InfoPanelProps) {
         </div>
 
         {/* Footer panel */}
-        <div className="p-6 border-t border-white/10">
+        <div className="p-6 border-t border-slate-200">
           <button
             onClick={onClose}
-            className="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-gray-300 hover:text-white text-sm font-medium rounded-xl transition-all duration-150"
+            className="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 text-sm font-medium rounded-xl transition-all duration-150"
           >
             Tutup Panel
           </button>

@@ -15,6 +15,8 @@ export interface AnnotationData {
   description: string | React.ReactNode;
   /** Posisi hotspot di ruang 3D [x, y, z] */
   position: [number, number, number];
+  /** Path ke file audio MP3 untuk anotasi ini (opsional) */
+  audioPath?: string;
 }
 
 /** Data keseluruhan satu komponen elektronika */
@@ -46,6 +48,8 @@ export interface ComponentData {
   category: "pasif" | "aktif";
   /** Daftar anotasi hotspot */
   annotations: AnnotationData[];
+  /** Path ke file audio intro komponen (diputar otomatis saat halaman dibuka) */
+  introAudio?: string;
 }
 
 /** Props untuk komponen Annotation */

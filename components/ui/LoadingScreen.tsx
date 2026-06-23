@@ -6,7 +6,7 @@
 
 export default function LoadingScreen() {
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950 z-10">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 z-10">
       {/* Spinner animasi */}
       <div className="relative w-20 h-20 mb-6">
         {/* Ring luar */}
@@ -20,10 +20,10 @@ export default function LoadingScreen() {
       </div>
 
       {/* Teks loading */}
-      <p className="text-gray-300 text-sm font-medium tracking-widest uppercase animate-pulse">
+      <p className="text-slate-700 text-sm font-medium tracking-widest uppercase animate-pulse">
         Memuat Model 3D...
       </p>
-      <p className="text-gray-600 text-xs mt-2">Harap tunggu sebentar</p>
+      <p className="text-slate-400 text-xs mt-2">Harap tunggu sebentar</p>
     </div>
   );
 }

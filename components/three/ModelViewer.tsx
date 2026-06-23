@@ -50,7 +50,7 @@ class ModelErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950 gap-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 gap-4">
           {/* Ikon error */}
           <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
             <svg
@@ -70,10 +70,10 @@ class ModelErrorBoundary extends Component<
             </svg>
           </div>
           <div className="text-center">
-            <p className="text-gray-200 font-semibold mb-1">
+            <p className="text-slate-800 font-semibold mb-1">
               Gagal Memuat Model 3D
             </p>
-            <p className="text-gray-500 text-sm max-w-xs">
+            <p className="text-slate-500 text-sm max-w-xs">
               {this.state.errorMessage || "Terjadi kesalahan saat memuat file model."}
             </p>
           </div>
@@ -154,7 +154,7 @@ export default function ModelViewer({
             camera={{ position: [0, 0, 4], fov: 45 }}
             gl={{
               antialias: true,
-              alpha: false,
+              alpha: true,
               powerPreference: "high-performance",
             }}
             shadows={{ type: THREE.PCFShadowMap }}

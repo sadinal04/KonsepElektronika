@@ -42,21 +42,24 @@ export default function ComponentCard({ component }: ComponentCardProps) {
   return (
     <Link href={`/${component.id}`} className="group block h-full">
       <div
-        className="relative overflow-hidden rounded-2xl border border-white/10 bg-gray-900/50 p-6 h-full
-          transition-all duration-300 hover:border-white/20 hover:-translate-y-1 flex flex-col"
+        className="relative overflow-hidden rounded-2xl border bg-white p-6 h-full
+          transition-all duration-300 hover:-translate-y-1 flex flex-col shadow-sm hover:shadow-xl"
+        style={{ borderColor: "rgba(15,23,42,0.08)" }}
         onMouseEnter={(e) => {
           (e.currentTarget as HTMLDivElement).style.boxShadow =
-            `0 20px 60px ${component.accentColor}30`;
+            `0 20px 60px ${component.accentColor}25, 0 4px 16px rgba(15,23,42,0.08)`;
+          (e.currentTarget as HTMLDivElement).style.borderColor = `${component.accentColor}40`;
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 3px rgba(15,23,42,0.07)";
+          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(15,23,42,0.08)";
         }}
       >
         {/* Gradient hover overlay */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse at top, ${component.accentColor}15 0%, transparent 70%)`,
+            background: `radial-gradient(ellipse at top, ${component.accentColor}08 0%, transparent 70%)`,
           }}
         />
 
@@ -66,9 +69,9 @@ export default function ComponentCard({ component }: ComponentCardProps) {
             className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full"
             style={{
               background: component.category === "aktif"
-                ? "rgba(34,197,94,0.12)" : "rgba(99,102,241,0.12)",
-              color: component.category === "aktif" ? "#4ade80" : "#818cf8",
-              border: `1px solid ${component.category === "aktif" ? "rgba(34,197,94,0.25)" : "rgba(99,102,241,0.25)"}`,
+                ? "rgba(22,163,74,0.08)" : "rgba(79,70,229,0.08)",
+              color: component.category === "aktif" ? "#16a34a" : "#4f46e5",
+              border: `1px solid ${component.category === "aktif" ? "rgba(22,163,74,0.2)" : "rgba(79,70,229,0.2)"}`,
             }}
           >
             {component.category === "aktif" ? "Aktif" : "Pasif"}
@@ -94,10 +97,10 @@ export default function ComponentCard({ component }: ComponentCardProps) {
         </div>
 
         {/* Nama */}
-        <h3 className="text-xl font-bold text-white mb-2 relative">{component.nameBahasa}</h3>
+        <h3 className="text-xl font-bold text-slate-900 mb-2 relative">{component.nameBahasa}</h3>
 
         {/* Deskripsi */}
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 relative flex-1">
+        <p className="text-slate-500 text-sm leading-relaxed mb-6 relative flex-1">
           {component.description}
         </p>
 
@@ -105,7 +108,7 @@ export default function ComponentCard({ component }: ComponentCardProps) {
         <div className="relative flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: component.accentColor }}/>
-            <span className="text-xs text-gray-500">{component.annotations.length} anotasi</span>
+            <span className="text-xs text-slate-400">{component.annotations.length} anotasi</span>
           </div>
 
           <span

@@ -22,18 +22,18 @@ export default function HomePage() {
   const aktif = getComponentsByCategory("aktif");
 
   return (
-    <div className="min-h-screen bg-gray-950 overflow-hidden">
+    <div className="min-h-screen overflow-hidden" style={{ background: "#f1f5f9" }}>
       {/* ── Background dekoratif ─────────────────────────────── */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px]" />
-        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]" />
-        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96 h-40 bg-blue-600/10 rounded-full blur-[80px]" />
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-200/40 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-violet-200/30 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96 h-40 bg-blue-200/30 rounded-full blur-[80px]" />
         {/* Grid background */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.4]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+              "linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
@@ -43,13 +43,13 @@ export default function HomePage() {
         {/* ── Hero Section ─────────────────────────────────────── */}
         <section className="pt-16 pb-12 sm:pt-24 sm:pb-16 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-300 text-xs font-medium mb-8 tracking-wide">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 border border-indigo-200 rounded-full text-indigo-600 text-xs font-medium mb-8 tracking-wide">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
             Media Pembelajaran Interaktif
           </div>
 
           {/* Judul */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6 max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6 max-w-4xl mx-auto">
             Perancangan Media Pembelajaran Menggunakan{" "}
             <span className="text-gradient-primary">Augmented Reality (AR)</span>{" "}
             pada Materi{" "}
@@ -57,9 +57,9 @@ export default function HomePage() {
           </h1>
 
           {/* Deskripsi */}
-          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
             Eksplorasi komponen elektronika dasar secara interaktif melalui model{" "}
-            <strong className="text-gray-300">3 dimensi</strong>. Klik hotspot
+            <strong className="text-slate-700">3 dimensi</strong>. Klik hotspot
             pada model untuk mempelajari setiap bagian komponen secara mendalam.
           </p>
 
@@ -71,10 +71,10 @@ export default function HomePage() {
               { value: "AR", label: "Teknologi" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-1">
+                <div className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">
                   {stat.value}
                 </div>
-                <div className="text-xs text-gray-500 uppercase tracking-widest">
+                <div className="text-xs text-slate-400 uppercase tracking-widest">
                   {stat.label}
                 </div>
               </div>
@@ -85,19 +85,19 @@ export default function HomePage() {
         {/* ── A. Komponen Pasif ─────────────────────────────── */}
         <section className="pb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-white/5"/>
+            <div className="h-px flex-1 bg-slate-200"/>
             <div className="flex items-center gap-2">
               <span
                 className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(99,102,241,0.12)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.25)" }}
+                style={{ background: "rgba(79,70,229,0.08)", color: "#4f46e5", border: "1px solid rgba(79,70,229,0.2)" }}
               >
                 A
               </span>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+              <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
                 Komponen Pasif
               </h2>
             </div>
-            <div className="h-px flex-1 bg-white/5"/>
+            <div className="h-px flex-1 bg-slate-200"/>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -110,19 +110,19 @@ export default function HomePage() {
         {/* ── B. Komponen Aktif ─────────────────────────────── */}
         <section className="pb-20">
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-white/5"/>
+            <div className="h-px flex-1 bg-slate-200"/>
             <div className="flex items-center gap-2">
               <span
                 className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(34,197,94,0.12)", color: "#4ade80", border: "1px solid rgba(34,197,94,0.25)" }}
+                style={{ background: "rgba(22,163,74,0.08)", color: "#16a34a", border: "1px solid rgba(22,163,74,0.2)" }}
               >
                 B
               </span>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+              <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
                 Komponen Aktif
               </h2>
             </div>
-            <div className="h-px flex-1 bg-white/5"/>
+            <div className="h-px flex-1 bg-slate-200"/>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -134,7 +134,7 @@ export default function HomePage() {
 
         {/* ── Footer ──────────────────────────────────────────── */}
         <footer className="pb-8 text-center">
-          <p className="text-gray-600 text-xs">
+          <p className="text-slate-400 text-xs">
             Media Pembelajaran · Augmented Reality · Konsep Elektronika
           </p>
         </footer>
